@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
 	char outbuff[MIN_SIZE];
 	char sortbuff[MIN_SIZE]; 
 	char *sort_cmd = "sort";
+	char *ret_cmd = " 2> "; 
 
 	lstr[10] = '\0'; /*  null terminate string */
 	
@@ -68,7 +69,7 @@ int main(int argc, char *argv[])
 			if (fout == NULL)
 			{
 				fprintf(stderr, "can't create file.\n", argv[3]);
-				exit(1);
+			  exit(1);
 			}
 
 			size = get_file_size(fin);
@@ -109,8 +110,9 @@ int main(int argc, char *argv[])
 
 		/* sort the outfile */ 	
 		
-		/*
-		int length = strlen(sort_cmd) + sizeof(fout_name) + 1; 
+		int length = strlen(sort_cmd) + sizeof(fout_name) * 2
+                 + strlen(ret_cmd) + 1; //*2 we need it twice.
+
 		char sys_cmd [length +1]; //+1 for null terminator;
 		sys_cmd [length] = '\0'; 
 
@@ -120,14 +122,13 @@ int main(int argc, char *argv[])
 		strcpy(&sys_cmd, sort_cmd);
 		strcat(&sys_cmd, " ");
 		strcat(&sys_cmd, &fout_name);
-	
-		printf("system command: %s\n", &sys_cmd); 
+		strcat(&sys_cmd, ret_cmd);
+		strcat(&sys_cmd, &fout_name); 
 		
 		system(&sys_cmd); 
 
 		printf("copied.\n");
 
-		*/
 	fclose(fin);
 	fclose(fout);
 	return 0;
