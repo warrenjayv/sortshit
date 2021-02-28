@@ -43,7 +43,8 @@ int main(int argc, char *argv[])
 	char outbuff[MIN_SIZE];
 	char sortbuff[MIN_SIZE]; 
 	char *sort_cmd = "sort";
-	char *ret_cmd = " 2> "; 
+	char *ret_cmd = " > "; 	
+	char *sort_out = "sorted_out.txt"; 
 
 	lstr[10] = '\0'; /*  null terminate string */
 	
@@ -107,30 +108,31 @@ int main(int argc, char *argv[])
 
       }//while()
 
+		fclose(fin);
+		fclose(fout); 
 
 		/* sort the outfile */ 	
 		
-		int length = strlen(sort_cmd) + sizeof(fout_name) * 2
+		int length = strlen(sort_cmd) + sizeof(fout_name) * 
                  + strlen(ret_cmd) + 1; //*2 we need it twice.
 
 		char sys_cmd [length +1]; //+1 for null terminator;
 		sys_cmd [length] = '\0'; 
 
 		strcpy(&fout_name, argv[3]); 		
-		printf("fout: %s\n", fout_name); 
 	
 		strcpy(&sys_cmd, sort_cmd);
 		strcat(&sys_cmd, " ");
 		strcat(&sys_cmd, &fout_name);
 		strcat(&sys_cmd, ret_cmd);
-		strcat(&sys_cmd, &fout_name); 
+		strcat(&sys_cmd, sort_out); 
 		
+		printf("command %s\n", &sys_cmd); 		
+
 		system(&sys_cmd); 
 
 		printf("copied.\n");
 
-	fclose(fin);
-	fclose(fout);
 	return 0;
 
   }//if (atoi(argv[1]) 
