@@ -132,7 +132,8 @@ int main(int argc, char *argv[])
 		system(&sys_cmd); 
 
 		printf("copied.\n");
-
+	
+		printf("whatever man\n"); 
 	return 0;
 
   }//if (atoi(argv[1]) 
